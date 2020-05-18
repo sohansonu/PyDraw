@@ -341,9 +341,21 @@ while run:
     pygame.time.delay(1)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            os.remove("tempsurface.png")
-            os.remove("tempsurface2.png")
-            run=False
+            try:
+                os.remove("tempsurface.png")
+                try:
+                    os.remove("tempsurface2.png")
+                    run=False
+                except:
+                    run=False
+               
+                run=False
+            except:
+                try:
+                    os.remove("tempsurface2.png")
+                    run=False
+                except:
+                    run=False
         if event.type == pygame.MOUSEBUTTONDOWN:
             x1,y1=pygame.mouse.get_pos()
             if x1<500 and y1<500:
