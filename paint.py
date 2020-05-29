@@ -10,67 +10,52 @@ win=pygame.display.set_mode((600,600))
 pygame.display.set_caption("PyPaint")
 
 sys.setrecursionlimit(10000000)
+def gotomain():
+    print("main")
 
-
+def checksize():
     
-def size(ms,mx,my):
-    global SIZE
-    c2=0
-    c4=0
-    c6=0
-    c8=0
-    if ms==(1,0,0) and mx>510 and mx<530 and my<120 and my>80:
-        SIZE=2
-        c2=1
-        c4=0
-        c6=0
-        c8=0
-    if ms==(1,0,0) and mx>530 and mx<550 and my<120 and my>80:
-        SIZE=4
-        c2=0
-        c4=1
-        c6=0
-        c8=0
-    if ms==(1,0,0) and mx>550 and mx<570 and my<120 and my>80:
-        SIZE=6
-        c2=0
-        c4=0
-        c6=1
-        c8=0
-    if ms==(1,0,0) and mx>570 and mx<590 and my<120 and my>80:
-        SIZE=8
-        c2=0
-        c4=0
-        c6=0
-        c8=1
-        
-    if c2==1:
+    if SIZE==2:
         pygame.draw.circle(win,(0,255,0),(520,100),2)
         pygame.draw.circle(win,(255,255,255),(540,100),4)
         pygame.draw.circle(win,(255,255,255),(560,100),6)
         pygame.draw.circle(win,(255,255,255),(580,100),8)
 
-    elif c4==1:
+    elif SIZE==4:
         pygame.draw.circle(win,(255,255,255),(520,100),2)
         pygame.draw.circle(win,(0,255,0),(540,100),4)
         pygame.draw.circle(win,(255,255,255),(560,100),6)
         pygame.draw.circle(win,(255,255,255),(580,100),8)
             
-    elif c6==1:
+    elif SIZE==6:
         pygame.draw.circle(win,(255,255,255),(520,100),2)
         pygame.draw.circle(win,(255,255,255),(540,100),4)
         pygame.draw.circle(win,(0,255,0),(560,100),6)
         pygame.draw.circle(win,(255,255,255),(580,100),8)
 
-    elif c8==1:
+    elif SIZE==8:
         pygame.draw.circle(win,(255,255,255),(520,100),2)
         pygame.draw.circle(win,(255,255,255),(540,100),4)
         pygame.draw.circle(win,(255,255,255),(560,100),6)
         pygame.draw.circle(win,(0,255,0),(580,100),8)
+    pygame.display.update()    
+def size(ms,mx,my):
+    global SIZE
+    if ms==(1,0,0) and mx>510 and mx<530 and my<120 and my>80:
+        SIZE=2
+    if ms==(1,0,0) and mx>530 and mx<550 and my<120 and my>80:
+        SIZE=4
+    if ms==(1,0,0) and mx>550 and mx<570 and my<120 and my>80:
+        SIZE=6
+    if ms==(1,0,0) and mx>570 and mx<590 and my<120 and my>80:
+        SIZE=8
+        
+    checksize()
     
     pygame.display.update()    
     
 def copycolor():
+    
     subwin=win.subsurface((0,0,500,500))
     pygame.image.save(subwin,"tempsurface.png")
     TS=pygame.image.load("tempsurface.png")
@@ -80,6 +65,20 @@ def copycolor():
     while flag:
         pygame.time.delay(1)
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                try:
+                    os.remove("tempsurface.png")
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
+                except:
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
             if event.type == pygame.MOUSEBUTTONUP:
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
@@ -106,16 +105,33 @@ def copycolor():
             flag=False
             
 def drawline(color,flg2):
+    time.sleep(0.2)
+    checksize()
     subwin=win.subsurface((0,0,500,500))
     pygame.image.save(subwin,"tempsurface.png")
     TS=pygame.image.load("tempsurface.png")
     flg=0
+    slp=0.2
     print("linedrawing")
     l,m,n=color
     flag=True
     while flag:
         pygame.time.delay(1)
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                try:
+                    os.remove("tempsurface.png")
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
+                except:
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
@@ -127,21 +143,23 @@ def drawline(color,flg2):
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
 
-                    flg2=1
+
                     print("released")
                     drawline(color,flg2)
+                    slp=0
                 
         ms=pygame.mouse.get_pressed()
         mx,my=pygame.mouse.get_pos()
         if mx>500 and my<500 and ms==(1,0,0):
             size(ms,mx,my)
-        if ms==(0,0,1) and mx>85 and mx<115 and my>540 and my<570 and flg2==1:
+        if ms==(1,0,0) and mx>165 and mx<185 and my>540 and my<570:
+            time.sleep(slp)
             flag=False
             break
             
         if flg!=1:
             nx,ny=pygame.mouse.get_pos()
-        if ms==(0,0,1):
+        if ms==(1,0,0) and mx<500 and my<500:
             flg=1
             x,y=nx,ny
             p,q=pygame.mouse.get_pos()
@@ -156,16 +174,33 @@ def drawline(color,flg2):
         if my>575 and ms==(1,0,0):
             flag=False    
 def drawsquare(color,flg2):
+    time.sleep(0.2)
+    checksize()
     subwin=win.subsurface((0,0,500,500))
     pygame.image.save(subwin,"tempsurface.png")
     TS=pygame.image.load("tempsurface.png")
     flg=0
+    slp=0.2
     print("squaredrawing")
     l,m,n=color
     flag=True
     while flag:
         pygame.time.delay(1)
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                try:
+                    os.remove("tempsurface.png")
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
+                except:
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
@@ -177,21 +212,22 @@ def drawsquare(color,flg2):
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
 
-                    flg2=1
                     print("released")
                     drawsquare(color,flg2)
+                    slp=0
                 
         ms=pygame.mouse.get_pressed()
         mx,my=pygame.mouse.get_pos()
         if mx>500 and my<500 and ms==(1,0,0):
             size(ms,mx,my)
-        if ms==(0,0,1) and mx>85 and mx<115 and my>540 and my<570 and flg2==1:
+        if ms==(1,0,0) and mx>85 and mx<115 and my>540 and my<570:
+            time.sleep(slp)
             flag=False
             break
             
         if flg!=1:
             nx,ny=pygame.mouse.get_pos()
-        if ms==(0,0,1):
+        if ms==(1,0,0) and mx<500 and my<500:
             flg=1
             x,y=nx,ny
             p,q=pygame.mouse.get_pos()
@@ -213,16 +249,33 @@ def drawsquare(color,flg2):
             flag=False
     
 def drawcircle(color,flg2):
+    time.sleep(0.2)
+    checksize()
     subwin=win.subsurface((0,0,500,500))
     pygame.image.save(subwin,"tempsurface.png")
     TS=pygame.image.load("tempsurface.png")
     flg=0
+    slp=0.2
     print("circledrawing")
     l,m,n=color
     flag=True
     while flag:
         pygame.time.delay(1)
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                try:
+                    os.remove("tempsurface.png")
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
+                except:
+                    try:
+                        os.remove("tempsurface2.png")
+                        pygame.quit()
+                    except:
+                        pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
@@ -233,19 +286,20 @@ def drawcircle(color,flg2):
             if event.type == pygame.MOUSEBUTTONUP:
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
-                    flg2=1
                     print("released")
                     drawcircle(color,flg2)
+                    slp=0
         ms=pygame.mouse.get_pressed()
         mx,my=pygame.mouse.get_pos()
         if mx>500 and my<500 and ms==(1,0,0):
             size(ms,mx,my)
-        if ms==(0,0,1) and mx>45 and mx<75 and my>540 and my<570 and flg2==1:
+        if ms==(1,0,0) and mx>45 and mx<75 and my>540 and my<570:
+            time.sleep(slp)
             flag=False
             break
         if flg!=1:
             nx,ny=pygame.mouse.get_pos()
-        if ms==(0,0,1):
+        if ms==(1,0,0) and mx<500 and my<500:
             flg=1
             x,y=nx,ny
             p,q=pygame.mouse.get_pos()
@@ -328,10 +382,6 @@ my=0
 mx2=0
 my2=0
 imgnum=0
-c2=1
-c4=0
-c6=0
-c8=0
 global frames
 global SIZE
 SIZE=2
@@ -363,8 +413,8 @@ while run:
                 pygame.image.save(framewin,"tempsurface2.png")
                 frames.append(pygame.image.load("tempsurface2.png"))
 
-    
         
+    checksize()    
     ms=pygame.mouse.get_pressed()
     
     mx,my=pygame.mouse.get_pos()
@@ -458,30 +508,7 @@ while run:
             time.sleep(0.2)
         except:
             continue    
-    if ms==(1,0,0) and mx>510 and mx<530 and my<120 and my>80:
-        SIZE=2
-        c2=1
-        c4=0
-        c6=0
-        c8=0
-    if ms==(1,0,0) and mx>530 and mx<550 and my<120 and my>80:
-        SIZE=4
-        c2=0
-        c4=1
-        c6=0
-        c8=0
-    if ms==(1,0,0) and mx>550 and mx<570 and my<120 and my>80:
-        SIZE=6
-        c2=0
-        c4=0
-        c6=1
-        c8=0
-    if ms==(1,0,0) and mx>570 and mx<590 and my<120 and my>80:
-        SIZE=8
-        c2=0
-        c4=0
-        c6=0
-        c8=1    
+    size(ms,mx,my)    
     x,y,z=color
     
     pygame.draw.line(win,(255,255,255),(170,540),(170,570),2)
@@ -496,29 +523,7 @@ while run:
     Text("Open",430,560)
     Text("Undo",270,560)
     Text("Size",550,75)
-    if c2==1:
-        pygame.draw.circle(win,(0,255,0),(520,100),2)
-        pygame.draw.circle(win,(255,255,255),(540,100),4)
-        pygame.draw.circle(win,(255,255,255),(560,100),6)
-        pygame.draw.circle(win,(255,255,255),(580,100),8)
-
-    elif c4==1:
-        pygame.draw.circle(win,(255,255,255),(520,100),2)
-        pygame.draw.circle(win,(0,255,0),(540,100),4)
-        pygame.draw.circle(win,(255,255,255),(560,100),6)
-        pygame.draw.circle(win,(255,255,255),(580,100),8)
-        
-    elif c6==1:
-        pygame.draw.circle(win,(255,255,255),(520,100),2)
-        pygame.draw.circle(win,(255,255,255),(540,100),4)
-        pygame.draw.circle(win,(0,255,0),(560,100),6)
-        pygame.draw.circle(win,(255,255,255),(580,100),8)
-
-    elif c8==1:
-        pygame.draw.circle(win,(255,255,255),(520,100),2)
-        pygame.draw.circle(win,(255,255,255),(540,100),4)
-        pygame.draw.circle(win,(255,255,255),(560,100),6)
-        pygame.draw.circle(win,(0,255,0),(580,100),8)    
+   
 
 
     
