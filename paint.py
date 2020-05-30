@@ -103,7 +103,7 @@ def copycolor():
         if my>575 and ms==(1,0,0):
             flag=False
             
-def drawline(color,flg2):
+def drawline(color):
     time.sleep(0.2)
     checksize()
     subwin=win.subsurface((0,0,500,500))
@@ -144,7 +144,7 @@ def drawline(color,flg2):
 
 
                     print("released")
-                    drawline(color,flg2)
+                    drawline(color)
                     slp=0
                 
         ms=pygame.mouse.get_pressed()
@@ -172,7 +172,7 @@ def drawline(color,flg2):
             flag=False
         if my>575 and ms==(1,0,0):
             flag=False    
-def drawsquare(color,flg2):
+def drawsquare(color):
     time.sleep(0.2)
     checksize()
     subwin=win.subsurface((0,0,500,500))
@@ -212,7 +212,7 @@ def drawsquare(color,flg2):
                 if x1<500 and y1<500:
 
                     print("released")
-                    drawsquare(color,flg2)
+                    drawsquare(color)
                     slp=0
                 
         ms=pygame.mouse.get_pressed()
@@ -247,7 +247,7 @@ def drawsquare(color,flg2):
         if my>575 and ms==(1,0,0):
             flag=False
     
-def drawcircle(color,flg2):
+def drawcircle(color):
     time.sleep(0.2)
     checksize()
     subwin=win.subsurface((0,0,500,500))
@@ -286,7 +286,7 @@ def drawcircle(color,flg2):
                 x1,y1=pygame.mouse.get_pos()
                 if x1<500 and y1<500:
                     print("released")
-                    drawcircle(color,flg2)
+                    drawcircle(color)
                     slp=0
         ms=pygame.mouse.get_pressed()
         mx,my=pygame.mouse.get_pos()
@@ -478,17 +478,17 @@ while run:
     if ms==(1,0,0) and mx>45 and mx<75 and my>540 and my<570:
         pygame.draw.circle(win,(0,255,0),(60,555),15,2)
         pygame.display.update()
-        drawcircle(color,0)
+        drawcircle(color)
     if ms==(1,0,0) and mx>85 and mx<115 and my>540 and my<570:
         pygame.draw.rect(win,(0,255,0),(85,540,30,30),2)
         pygame.display.update()
-        drawsquare(color,0)
+        drawsquare(color)
     if ms==(1,0,0) and mx>125 and mx<155 and my>540 and my<570:
         pygame.draw.rect(win,(0,0,0),(0,0,500,500))
     if ms==(1,0,0) and mx>165 and mx<185 and my>540 and my<570:
         pygame.draw.line(win,(0,255,0),(170,540),(170,570),2)
         pygame.display.update()
-        drawline(color,0)
+        drawline(color)
     if ms==(1,0,0) and mx>205 and mx<235 and my>540 and my<570:
         try:
             CC=copycolor()
