@@ -10,8 +10,7 @@ win=pygame.display.set_mode((600,600))
 pygame.display.set_caption("PyPaint")
 
 sys.setrecursionlimit(10000000)
-def gotomain():
-    print("main")
+
 
 def checksize():
     
